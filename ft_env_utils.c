@@ -6,7 +6,7 @@
 /*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 15:46:39 by abridger          #+#    #+#             */
-/*   Updated: 2022/01/10 18:26:44 by abridger         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:46:32 by abridger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_env	*ft_lstnew(const char *line)
 	len_value = ft_len_value((char *)line);
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
-		return (NULL); // add function with error
+		return (NULL);
 	else
 	{
 		new->line = ft_strdup(line);
@@ -57,16 +57,21 @@ void	ft_lstadd_back(t_env **lst, t_env *new)
 	ft_lstlast(*lst)->next = new;
 }
 
-int	parse_envrmnt(t_env **lst, char **envp)
+int	parse_envrmnt(t_data *data, char **envp)
 {
 	int		i;
+	t_env	**lst;
 	t_env	*tmp;
 
 	i = 0;
+	lst = data->envrmnt;
 	while (envp[i]) // errors?
 	{
 		tmp = ft_lstnew(envp[i]);
-		ft_lstadd_back(lst, tmp);
+		if (!tmp)
+			return (ft_error(1, data, "Malloc: "));
+		else
+			ft_lstadd_back(lst, tmp);
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:03:08 by abridger          #+#    #+#             */
-/*   Updated: 2022/01/10 18:12:29 by abridger         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:04:56 by abridger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ void	ft_test_readline(void)
 	}
 }
 
-void	ft_print_lsts(t_env **lst)
+void	ft_print_lsts(t_data *data)
 {
+	t_env	**lst;
 	t_env	*tmp;
 	t_env	*curr;
 	int		i;
@@ -49,6 +50,7 @@ void	ft_print_lsts(t_env **lst)
 	tmp = NULL;
 	curr = NULL;
 	i = 0;
+	lst = data->envrmnt;
 	if (*lst)
 		curr = *lst;
 	while (curr)
