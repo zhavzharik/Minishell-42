@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_data_utils.c                                    :+:      :+:    :+:   */
+/*   ft_action.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/12 15:01:41 by abridger          #+#    #+#             */
-/*   Updated: 2022/01/13 21:37:41 by abridger         ###   ########.fr       */
+/*   Created: 2022/01/13 16:29:06 by abridger          #+#    #+#             */
+/*   Updated: 2022/01/13 21:40:31 by abridger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_init_data(t_data *data, char **envp)
+int	action(t_data *data, char **envp)
 {
-	t_env	*lst;
-
-	lst = NULL;
-	if (data)
+	data = (t_data *)malloc(sizeof(t_data));
+	if (!data)
+		return (ft_error(1, NULL, "Malloc: "));
+	else
 	{
-		data->envrmnt = parse_envrmnt(lst, envp);
-		data->shell_cmd = NULL;
-		return (0);
+		ft_init_data(data, envp);
+		// ft_test_readline(); // test
+		ft_print_lsts(data); // test
+		ft_data_clear(data);
 	}
 	return (0);
 }

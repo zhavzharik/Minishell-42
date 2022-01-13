@@ -6,7 +6,7 @@
 #    By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/05 18:35:44 by abridger          #+#    #+#              #
-#    Updated: 2022/01/12 16:35:45 by abridger         ###   ########.fr        #
+#    Updated: 2022/01/13 16:38:27 by abridger         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS			=	minishell.c		\
 					ft_clear.c		\
 					ft_data_utils.c	\
 					ft_errors.c		\
+					ft_action.c		\
 					ft_read_line.c
 
 

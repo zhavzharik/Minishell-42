@@ -6,7 +6,7 @@
 /*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 18:45:00 by abridger          #+#    #+#             */
-/*   Updated: 2022/01/12 16:33:42 by abridger         ###   ########.fr       */
+/*   Updated: 2022/01/13 21:42:47 by abridger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	t_env			**envrmnt;
+	t_env			*envrmnt;
 	t_cmd			*shell_cmd;
 	int				pid;
 	int				fd[2];
@@ -63,11 +63,13 @@ t_env	*ft_lstlast(t_env *lst);
 void	ft_lstadd_back(t_env **lst, t_env *new);
 int		ft_len_key(char *str);
 int		ft_len_value(char *str);
-int		parse_envrmnt(t_data *data, char **envp);
-void	ft_lst_clear(t_env **lst);
-int		ft_malloc_data(t_data *data);
+t_env	*parse_envrmnt(t_env *lst, char **envp);
+void	ft_lst_clear(t_env *lst);
+int		ft_init_data(t_data *data, char **envp);
 void	ft_data_clear(t_data *data);
 int		ft_error(int errnum, t_data *data, char *str);
+int		put_err_message(char *str);
+int		action(t_data *data, char **envp);
 
 void	ft_test_readline(void); // delete
 void	ft_print_lsts(t_data *data); // delete

@@ -6,7 +6,7 @@
 /*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 15:46:39 by abridger          #+#    #+#             */
-/*   Updated: 2022/01/12 16:46:32 by abridger         ###   ########.fr       */
+/*   Updated: 2022/01/13 20:48:24 by abridger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,22 @@ void	ft_lstadd_back(t_env **lst, t_env *new)
 	ft_lstlast(*lst)->next = new;
 }
 
-int	parse_envrmnt(t_data *data, char **envp)
+t_env	*parse_envrmnt(t_env *lst, char **envp)
 {
 	int		i;
-	t_env	**lst;
 	t_env	*tmp;
 
 	i = 0;
-	lst = data->envrmnt;
+	// (void) data;
+	// data->envrmnt = NULL;
+	// lst = data->envrmnt;
+	// lst = NULL;
 	while (envp[i]) // errors?
 	{
 		tmp = ft_lstnew(envp[i]);
-		if (!tmp)
-			return (ft_error(1, data, "Malloc: "));
-		else
-			ft_lstadd_back(lst, tmp);
+		// printf("%s\n", tmp->line); // delete
+		ft_lstadd_back(&lst, tmp);
 		i++;
 	}
-	return (0);
+	return (lst);
 }
