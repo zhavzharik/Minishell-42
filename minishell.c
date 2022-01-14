@@ -6,7 +6,7 @@
 /*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 18:59:52 by abridger          #+#    #+#             */
-/*   Updated: 2022/01/13 21:40:23 by abridger         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:40:00 by abridger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int argc, char **argv, char **envp)
 		return (put_err_message("Run program without arguments!"));
 	else
 	{
-		// memset(&data, 0, sizeof(t_data));
 		action(data, envp);
 	}
 	return (0);
