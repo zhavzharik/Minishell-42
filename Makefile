@@ -1,60 +1,79 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/01/05 18:35:44 by abridger          #+#    #+#              #
-#    Updated: 2022/01/14 23:19:21 by abridger         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+#-fsanitize=address
 
-NAME			=	minishell
+NAME			= minishell
 
-HEADER			=	minishell.h
+SRC_DIR			= srcs
+OBJ_DIR			= objs
 
-SRCS			=	minishell.c		\
-					ft_strlen.c		\
-					ft_strcmp.c		\
-					ft_str_utils.c	\
-					ft_split.c		\
-					ft_env_utils.c	\
-					ft_clear.c		\
-					ft_data_utils.c	\
-					ft_errors.c		\
-					ft_action.c		\
-					ft_process.c	\
-					ft_read_line.c
+CC				= gcc
+CFLAGS			= -Wall -Wextra -Werror -g
 
+READLINE		= -lreadline -L/Users/$(USER)/.brew/Cellar/readline/8.1.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1.1/include
 
+LIB_DIR			= ./libft
+LINK_LIBFT		= -Llibft -lft
+LIB				= $(LIB_DIR)/libft.a
 
-OBJS			=	$(SRCS:.c=.o)
+HDR				= includes/minishell.h
+INCFLAGS		= -I./includes -I./libft
 
-CC				=	gcc
+SRC				=	srcs/main.c \
+					srcs/parser.c \
+					srcs/quotes.c \
+					srcs/dollar.c \
+					srcs/redirects.c \
+					srcs/tokens.c \
+					srcs/signals.c \
+					srcs/lsts.c \
+					srcs/errors.c \
+					srcs/utils.c \
+                    srcs/ft_env_utils.c			\
+                    srcs/ft_export.c			\
+                    srcs/ft_export_utils.c		\
+                    srcs/ft_clear.c				\
+                    srcs/ft_data_utils.c		\
+                    srcs/ft_errors.c			\
+                    srcs/ft_action.c			\
+                    srcs/action_utils.c			\
+                    srcs/ft_cd_utils.c			\
+                    srcs/ft_fd_redirect.c		\
+					srcs/ft_fd_pipe.c			\
+                    srcs/ft_echo_pwd.c			\
+                    srcs/ft_cd.c				\
+                    srcs/ft_unset.c				\
+                    srcs/ft_exit.c				\
+                    srcs/ft_env.c				\
+                    srcs/ft_sorting.c			\
+                    srcs/ft_libft_utils1.c		\
+                    srcs/ft_libft_utils2.c
 
-CFLAGS			=	-Wall -Wextra -Werror
+OBJ				= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
-LTFLAG			=	-ltermcap
+all				: $(NAME)
 
-LRFLAG			=	-lreadline
+$(NAME)			: $(OBJ) $(LIB)
+				@printf "objs		(created)\n"
+				@$(CC) $(CFLAGS) $(OBJ) -L. libft/libft.a  $(READLINE) -o $@
+				@printf "minishell	(created)\n"
 
-RM				=	rm -f
+$(OBJ_DIR)/%.o	: $(SRC_DIR)/%.c $(LIB) $(HDR)
+				@mkdir -p $(OBJ_DIR)
+				@$(CC) $(CFLAGS) -c $< -o $@
 
-all:	$(NAME)
+$(LIB)			:
+				@make -C $(LIB_DIR)
+				@printf "libft		(created)\n"
 
-%.o: %.c $(HEADER) Makefile
-	$(CC) $(CFLAGS) -c $< -o $@
+clean			:
+				@$(MAKE) -C $(LIB_DIR) clean
+				@rm -rf $(OBJ_DIR)
+				@printf "objs		(del)\n"
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(LTFLAG) $(LRFLAG) $(OBJS) -o $@
+fclean			: clean
+				@$(MAKE) -C $(LIB_DIR) fclean
+				@rm -f $(NAME)
+				@printf "minishell	(del)\n"
 
-clean:
-		$(RM) $(OBJS)
+re				: fclean all
 
-fclean: clean
-		$(RM) $(NAME)
-
-re:	fclean all
-
-.PHONY:	all clean fclean re
+.PHONY			: all clean fclean re
