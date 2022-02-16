@@ -6,7 +6,7 @@
 /*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 16:29:06 by abridger          #+#    #+#             */
-/*   Updated: 2022/02/13 00:59:27 by abridger         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:50:36 by abridger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_simple_execute(t_shell *data, t_info *curr, t_builtin *func)
 			else if (curr->pid == 0)
 			{
 				if (execve(get_prog_name(data, curr), data->info->argv,
-						   get_arr_from_lst(data)) == -1)
+						get_arr_from_lst(data)) == -1)
 					execve_error(data);
 				exit(data->exit_status);
 			}
@@ -90,7 +90,7 @@ int	ft_execute(t_shell *data, t_info *curr, t_builtin *func)
 			else
 			{
 				if (execve(get_prog_name(data, curr), curr->argv,
-						   get_arr_from_lst(data)) == -1)
+						get_arr_from_lst(data)) == -1)
 					execve_error(data);
 			}
 			exit(data->exit_status);
@@ -105,7 +105,7 @@ void	ft_execution_cycle(t_shell *data)
 {
 	t_info		*curr;
 	t_builtin	*func;
-	
+
 	curr = data->info->head;
 	data->count = msh_lstsize(curr);
 	func = create_array_function();

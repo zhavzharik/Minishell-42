@@ -1,25 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/14 17:51:03 by pkari             #+#    #+#             */
+/*   Updated: 2022/02/16 14:33:33 by abridger         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <signal.h>
-#include <errno.h>
-#include "../libft/libft.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <signal.h>
+# include <errno.h>
+# include "../libft/libft.h"
 
-#define TOKEN_PIPE				1 // |
-#define TOKEN_REDIRECT_INPUT	2 // < (fd 0)
-#define TOKEN_REDIRECT_OUTPUT1	3 // > (fd 1) перезаписывает файл
-#define TOKEN_REDIRECT_OUTPUT2	4 // >> (fd 1) дописывает в файл
-#define TOKEN_HEREDOC			5 // << 'EOF' пока не встретит EOF читает из out
-
+# define TOKEN_PIPE				1 // |
+# define TOKEN_REDIRECT_INPUT	2 // < (fd 0)
+# define TOKEN_REDIRECT_OUTPUT1	3 // > (fd 1) перезаписывает файл
+# define TOKEN_REDIRECT_OUTPUT2	4 // >> (fd 1) дописывает в файл
+# define TOKEN_HEREDOC			5 // << 'EOF' пока не встретит EOF читает из out
 
 typedef struct s_env
 {
@@ -37,14 +48,16 @@ typedef struct s_info
 {
 	int				token;
 	int				is_pipe;
+	int				redirect_flag;
 	int				argc;
 	char			**argv;
 	char			*output_file;
 	int				fd_output_file;
 	char			*input_file;
 	int				fd_input_file;
+	char			*heredoc_file;
 	char			*heredoc;
-	int				fd_heredoc[2];
+	int				fd_heredoc_file;
 	int				error;
 	int				nb_cmd;
 	int				fd_pipe[2];
@@ -66,6 +79,8 @@ typedef struct s_shell
 	int		save_out;
 	int		count;
 	int		check;
+	char	*home_value;
+	int		flag_path;
 }			t_shell;
 
 typedef int	(*t_builtin)(t_shell *, t_info *);
@@ -126,6 +141,7 @@ void		errno_error(t_shell *msh);
 void		execve_error(t_shell *data);
 
 //*** utils.c ***//
+void		dollar_env2(t_shell *msh, char *tmp);
 void		free_all(t_shell *msh);
 void		rl_replace_line(const char *text, int clear_undo);
 
@@ -133,7 +149,6 @@ void		rl_replace_line(const char *text, int clear_undo);
 char		*get_prog_name(t_shell *data, t_info *curr);
 char		**get_arr_from_lst(t_shell *data);
 void		exit_status_handler(t_shell *data);
-
 
 //**************************//
 //*********ABRIDGER*********//
@@ -169,8 +184,12 @@ void		ft_execution_cycle(t_shell *data);
 void		ft_init_saved_fd(t_shell *data);
 void		ft_close_saved_fd(t_shell *data);
 void		ft_redirect_dup(t_info *curr);
-void		ft_redirect_output(t_info *curr);
 void		ft_close_curr_files(t_info *curr);
+
+//*** ft_fd_redirect_utils.c ***//
+void		ft_redirect_output(t_info *curr);
+void		ft_redirect_input(t_info *curr);
+void		ft_read_input(t_info *curr);
 
 //*** ft_fd_pipe.c ***//
 int			ft_pipe_init(t_shell *data, t_info *curr);
@@ -202,11 +221,18 @@ void		ft_change_pwd_env(t_shell *data, char *curr_pwd, char *new_pwd);
 int			ft_err_many_args(t_shell *data);
 int			ft_exec_cd(t_shell *data, t_info *curr);
 
-//*** ft_cd_utils.c ***//
+//*** ft_cd_utils1.c ***//
 int			ft_err_no_dir(t_shell *data, char *str);
-int			ft_print_dir(t_shell *data, char *curr_pwd);
-char		*ft_get_home(t_shell *data);
+void		ft_get_home(t_shell *data);
 int			ft_add_home_dir(t_shell *data, char *line, char *curr_pwd);
+int			ft_check_args(t_shell *data, t_info *curr, char *curr_pwd);
+
+//*** ft_cd_utils2.c ***//
+int			ft_no_oldpwd(t_shell *data, char *str);
+void		ft_write_str(char *str);
+int			ft_print_dir(t_shell *data, char *curr_pwd);
+int			ft_err_option(t_shell *data, char *str);
+
 //*** ft_unset.c ***//
 int			ft_err_unset(t_shell *data, char *str);
 void		ft_del_lst(char *str, t_env *env, t_shell *data);

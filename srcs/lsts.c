@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pkari <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/14 17:53:41 by pkari             #+#    #+#             */
+/*   Updated: 2022/02/14 17:53:43 by pkari            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-t_env *msh_lstnew(char *key, char *val)
+t_env	*msh_lstnew(char *key, char *val)
 {
-	t_env *lst;
+	t_env	*lst;
 
 	lst = (t_env *)malloc(sizeof(t_env));
 	if (!(lst))
@@ -14,9 +26,9 @@ t_env *msh_lstnew(char *key, char *val)
 	return (lst);
 }
 
-t_env *msh_lstlast(t_env *env)
+t_env	*msh_lstlast(t_env *env)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	if (!env)
 		return (0);
@@ -26,9 +38,9 @@ t_env *msh_lstlast(t_env *env)
 	return (tmp);
 }
 
-void msh_lstadd_back(t_env **env, t_env *new)
+void	msh_lstadd_back(t_env **env, t_env *new)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	if (!(*env))
 		*env = new;
@@ -40,9 +52,9 @@ void msh_lstadd_back(t_env **env, t_env *new)
 	}
 }
 
-int msh_lstsize(t_info *curr)
+int	msh_lstsize(t_info *curr)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (curr->next)

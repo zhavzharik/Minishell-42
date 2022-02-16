@@ -45,7 +45,6 @@ void	print_argv(char **str, int indx)
 
 int	ft_exec_echo(t_shell *data, t_info *curr)
 {
-
 	(void)data;
 	if (curr->nb_cmd == 0)
 	{

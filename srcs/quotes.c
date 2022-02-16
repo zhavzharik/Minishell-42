@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pkari <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/14 17:53:41 by pkari             #+#    #+#             */
+/*   Updated: 2022/02/14 17:53:43 by pkari            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-int single_quotes(t_shell *msh, int *i)
+int	single_quotes(t_shell *msh, int *i)
 {
-	int j;
-	char *tmp;
-	char *tmp1;
-	char *tmp2;
+	int		j;
+	char	*tmp;
+	char	*tmp1;
+	char	*tmp2;
 
 	j = *i;
 	while (msh->str[++(*i)])
@@ -24,18 +36,18 @@ int single_quotes(t_shell *msh, int *i)
 	return (0);
 }
 
-int double_quotes(t_shell *msh, int *i)
+int	double_quotes(t_shell *msh, int *i)
 {
-	int j;
-	char *tmp;
-	char *tmp1;
-	char *tmp2;
+	int		j;
+	char	*tmp;
+	char	*tmp1;
+	char	*tmp2;
 
 	j = *i;
 	while (msh->str[++(*i)])
 	{
 		if (msh->str[*i] == '\"')
-			break;
+			break ;
 		else if ((msh->str[*i] == '$') && (msh->str[*i + 1] != '\"'))
 			dollar(msh, i);
 	}

@@ -58,8 +58,8 @@ char	*ft_strjoin2(char const *s1, char const *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	len_s1 = ft_strlen((char *) s1);
-	str = (char *)malloc(sizeof(char) * (size_t)(len_s1 + ft_strlen((char *)
-			s2)) +	1);
+	str = (char *)malloc(sizeof(char)
+			* (size_t)(len_s1 + ft_strlen((char *)s2)) + 1);
 	i = 0;
 	if (str)
 	{

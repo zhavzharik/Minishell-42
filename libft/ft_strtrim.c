@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pkari <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/14 17:53:55 by pkari             #+#    #+#             */
+/*   Updated: 2022/02/14 17:53:57 by pkari            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 static int	ft_c(char const *set, char c)
@@ -22,7 +34,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (!s1 || !set)
 		return (NULL);
 	start = 0;
-	end = ft_strlen((char*)s1);
+	end = ft_strlen((char *)s1);
 	while (ft_c(set, s1[start]) == 0)
 		start++;
 	while (ft_c(set, s1[end - 1]) == 0)

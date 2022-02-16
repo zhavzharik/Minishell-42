@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   action_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/14 17:53:41 by pkari             #+#    #+#             */
+/*   Updated: 2022/02/16 14:25:36 by abridger         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 //**start new functions**//
@@ -40,7 +52,7 @@ char	*get_prog_name(t_shell *data, t_info *curr)
 	return (str);
 }
 
-static int ft_lstsize2(t_env *env)
+static int	ft_lstsize2(t_env *env)
 {
 	int	i;
 
@@ -55,9 +67,9 @@ static int ft_lstsize2(t_env *env)
 
 char	**get_arr_from_lst(t_shell *data)
 {
-	t_env *tmp;
-	int i;
-	char *str;
+	t_env	*tmp;
+	int		i;
+	char	*str;
 
 	tmp = data->env;
 	i = ft_lstsize2(tmp);
@@ -78,7 +90,7 @@ char	**get_arr_from_lst(t_shell *data)
 void	exit_status_handler(t_shell *data)
 {
 	int	status;
-	
+
 	waitpid(-1, &status, 0);
 	if (WIFSIGNALED(status))
 		data->exit_status = WTERMSIG(status) + 128;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pkari <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/14 17:53:55 by pkari             #+#    #+#             */
+/*   Updated: 2022/02/14 17:53:57 by pkari            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
 
@@ -23,7 +35,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 int		ft_strlen(char *str);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
-void	*ft_memchr (const void *s, int c, size_t n);
+void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_memmove(void *dst, const void *src, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_strncpy(char *dest, char *source, int len);

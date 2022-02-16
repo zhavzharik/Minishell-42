@@ -109,12 +109,12 @@ void	ft_print_export(t_shell *data, int height)
 			if (sorted->sep)
 			{
 				write(1, sorted->sep, ft_strlen(sorted->sep));
-				write(1,"\"", 1);
+				write(1, "\"", 1);
 			}
 			if (sorted->value)
 				write(1, sorted->value, ft_strlen(sorted->value));
 			if (sorted->sep)
-				write(1,"\"", 1);
+				write(1, "\"", 1);
 			write(1, "\n", 1);
 			sorted = sorted->next_sorted;
 		}

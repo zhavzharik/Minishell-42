@@ -1,17 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/14 17:53:41 by pkari             #+#    #+#             */
+/*   Updated: 2022/02/16 14:38:22 by abridger         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-void shlvl(t_shell *msh)
+void	shlvl(t_shell *msh)
 {
-	t_env *tmp;
-	int shlvl;
+	t_env	*tmp;
+	int		shlvl;
 
 	tmp = msh->env;
 	while (1)
 	{
 		if (!tmp)
 		{
-			msh_lstadd_back(&tmp, msh_lstnew(ft_strdup("SHLVL"),ft_strdup
-			("1")));
+			msh_lstadd_back(&tmp, msh_lstnew
+				(ft_strdup("SHLVL"), ft_strdup("1")));
 			break ;
 		}
 		else if (!(ft_strcmp("SHLVL", tmp->key)))
@@ -29,9 +41,9 @@ void shlvl(t_shell *msh)
 	}
 }
 
-char *get_dollar_env(t_env *env, char *str)
+char	*get_dollar_env(t_env *env, char *str)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = env;
 	while (tmp)
@@ -43,10 +55,10 @@ char *get_dollar_env(t_env *env, char *str)
 	return ("");
 }
 
-void create_env(t_shell *msh, char **env)
+void	create_env(t_shell *msh, char **env)
 {
-	char **tmp;
-	int i;
+	char	**tmp;
+	int		i;
 
 	i = 0;
 	while (env[i])
@@ -58,7 +70,7 @@ void create_env(t_shell *msh, char **env)
 	}
 }
 
-void init_shell(t_shell *msh)
+void	init_shell(t_shell *msh)
 {
 	msh->env = NULL;
 	msh->array = NULL;
@@ -66,11 +78,13 @@ void init_shell(t_shell *msh)
 	msh->exit_status = 0;
 	msh->have_a_pipe = 0;
 	msh->check = 0;
+	msh->home_value = NULL;
+	msh->flag_path = 0;
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	t_shell msh;
+	t_shell	msh;
 
 	(void)argv;
 	if (argc != 1)
@@ -80,8 +94,8 @@ int main(int argc, char **argv, char **env)
 	}
 	init_shell(&msh);
 	msh.env = parse_envrmnt(msh.env, env);
-//	create_env(&msh, env);
 	shlvl(&msh);
+	ft_get_home(&msh);
 	while (1)
 	{
 		signal(SIGINT, ctrl_c);
@@ -90,11 +104,9 @@ int main(int argc, char **argv, char **env)
 		if (msh.str == NULL)
 			ctrl_d();
 		add_history(msh.str);
-		if (parser(&msh)) // parser part (pkari)
-			action(&msh); // builtin part (abridger)
+		if (parser(&msh))
+			action(&msh);
 		free_all(&msh);
 	}
-	free_all(&msh);
 	ft_data_clear(&msh);
 }
-

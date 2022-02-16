@@ -41,7 +41,7 @@ int	ft_err_env_args(t_shell *data, char *str)
 
 int	ft_exec_env(t_shell *data, t_info *curr)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = data->env;
 	data->exit_status = 0;

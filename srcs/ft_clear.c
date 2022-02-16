@@ -6,7 +6,7 @@
 /*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:45:11 by abridger          #+#    #+#             */
-/*   Updated: 2022/02/13 01:58:18 by abridger         ###   ########.fr       */
+/*   Updated: 2022/02/15 21:22:53 by abridger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_data_clear(t_shell *data)
 	{
 		if (data->env != NULL)
 			ft_env_clear(&data->env);
+		ft_str_clear(&data->home_value);
 		free(data);
 	}
 	data = NULL;

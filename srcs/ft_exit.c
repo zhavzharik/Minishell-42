@@ -6,7 +6,7 @@
 /*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 17:23:47 by abridger          #+#    #+#             */
-/*   Updated: 2022/01/27 16:32:30 by abridger         ###   ########.fr       */
+/*   Updated: 2022/02/14 18:52:32 by pkari            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ int	ft_right_digit(char *str)
 	return (check);
 }
 
+void	ft_err_exit2(char *err)
+{
+	write(STDERR_FILENO, "exit\n", ft_strlen("exit\n"));
+	write(STDERR_FILENO, "minishell: ", ft_strlen("minishell: "));
+	write(STDERR_FILENO, err, ft_strlen(err));
+	write(STDERR_FILENO, "\n", 1);
+}
+
 int	ft_err_exit(t_shell *data, char *str, int flag)
 {
 	char	*part_str;
@@ -48,10 +56,7 @@ int	ft_err_exit(t_shell *data, char *str, int flag)
 		part_str = ft_one_colon("exit");
 		err = ft_strjoin2(part_str, "too many arguments");
 	}
-	write(STDERR_FILENO, "exit\n", ft_strlen("exit\n"));
-	write(STDERR_FILENO, "minishell: ", ft_strlen("minishell: "));
-	write(STDERR_FILENO, err, ft_strlen(err));
-	write(STDERR_FILENO, "\n", 1);
+	ft_err_exit2(err);
 	ft_str_clear(&part_str);
 	ft_str_clear(&err);
 	if (flag == 1)

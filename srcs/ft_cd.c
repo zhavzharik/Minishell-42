@@ -6,7 +6,7 @@
 /*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 18:12:43 by abridger          #+#    #+#             */
-/*   Updated: 2022/02/14 22:46:20 by abridger         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:49:41 by abridger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,11 @@ int	ft_exec_cd(t_shell *data, t_info *curr)
 	char	*curr_pwd;
 	char	*new_pwd;
 
+	data->exit_status = 0;
 	if (curr->nb_cmd == 1)
 	{
 		curr_pwd = getcwd(buf1, sizeof(buf1));
-		if (ft_height_array(curr->argv) == 1)
-			return (ft_add_home_dir(data, NULL, curr_pwd));
-		if (curr->argv && ft_height_array(curr->argv) > 2)
-			return (ft_err_many_args(data));
-		if (!ft_strcmp(curr->argv[1], "-"))
-			return (ft_print_dir(data, curr_pwd));
-		if (!ft_strncmp(curr->argv[1], "~", 1))
-			return (ft_add_home_dir(data, curr->argv[1], curr_pwd));
-		if (curr->argv[1] && chdir(curr->argv[1]) < 0)
-			return (ft_err_no_dir(data, curr->argv[1]));
+		ft_check_args(data, curr, curr_pwd);
 		if (curr->argv[1] && curr->token == TOKEN_PIPE)
 			chdir(curr_pwd);
 		new_pwd = getcwd(buf2, sizeof(buf2));

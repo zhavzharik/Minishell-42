@@ -6,7 +6,7 @@
 /*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 20:46:58 by abridger          #+#    #+#             */
-/*   Updated: 2022/02/12 23:45:24 by abridger         ###   ########.fr       */
+/*   Updated: 2022/02/16 14:39:44 by abridger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ int	ft_err_unset(t_shell *data, char *str)
 	return (0);
 }
 
-void ft_del_lst_support(t_env *env, t_shell *data)
+void	ft_del_lst_support(t_env *env, t_shell *data)
 {
-	t_env *prev;
-	t_env *next;
+	t_env	*prev;
+	t_env	*next;
 
 	prev = NULL;
 	next = NULL;
@@ -53,7 +53,7 @@ void ft_del_lst_support(t_env *env, t_shell *data)
 	{
 		prev->next = next;
 		next->prev = prev;
-	}	
+	}
 	else if (!env->prev && env->next)
 	{
 		data->env = next;
@@ -95,6 +95,8 @@ int	ft_exec_unset(t_shell *data, t_info *curr)
 	{
 		while (curr->argv[i])
 		{
+			if (!ft_strcmp2(curr->argv[i], "PATH"))
+				data->flag_path = 1;
 			tmp = data->env;
 			if (!ft_err_unset(data, curr->argv[i]))
 				ft_del_lst(curr->argv[i], tmp, data);

@@ -6,7 +6,7 @@
 /*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 15:01:41 by abridger          #+#    #+#             */
-/*   Updated: 2022/02/13 01:28:09 by abridger         ###   ########.fr       */
+/*   Updated: 2022/02/16 14:05:33 by abridger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int	ft_height_array(char **array)
 	i = 0;
 	line = array;
 	while (line[i])
-			i++;
+		i++;
 	return (i);
 }

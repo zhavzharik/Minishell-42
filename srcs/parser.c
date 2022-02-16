@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abridger <abridger@student.21-school.ru    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/14 17:53:41 by pkari             #+#    #+#             */
+/*   Updated: 2022/02/15 23:28:09 by abridger         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-t_info *add_new_info(void)
+t_info	*add_new_info(void)
 {
-	t_info *tmp;
+	t_info	*tmp;
 
 	tmp = (t_info *)malloc(sizeof(t_info));
 	if (!tmp)
@@ -17,8 +29,10 @@ t_info *add_new_info(void)
 	tmp->heredoc = NULL;
 	tmp->error = 0;
 	tmp->nb_cmd = -1;
+	tmp->fd_heredoc_file = -2;
 	tmp->fd_pipe[0] = -2;
 	tmp->fd_pipe[1] = -2;
+	tmp->redirect_flag = 0;
 	tmp->pid = -2;
 	tmp->head = tmp;
 	tmp->prev = NULL;
@@ -26,7 +40,7 @@ t_info *add_new_info(void)
 	return (tmp);
 }
 
-void add_info(t_shell *msh)
+void	add_info(t_shell *msh)
 {
 	t_info	*new;
 	t_info	*head;
@@ -46,7 +60,7 @@ void add_info(t_shell *msh)
 	}
 }
 
-int minishell_parser(t_shell *msh, int *i)
+int	minishell_parser(t_shell *msh, int *i)
 {
 	if (msh->str[*i] == '\'')
 		return (single_quotes(msh, i));
@@ -61,22 +75,22 @@ int minishell_parser(t_shell *msh, int *i)
 	else if (msh->str[*i] == '>')
 	{
 		if (msh->str[*i + 1] == '>')
-			return(token_redirects(msh, i, TOKEN_REDIRECT_OUTPUT2));
+			return (token_redirects(msh, i, TOKEN_REDIRECT_OUTPUT2));
 		return (token_redirects(msh, i, TOKEN_REDIRECT_OUTPUT1));
 	}
 	else if (msh->str[*i] == '<')
 	{
 		if (msh->str[*i + 1] == '<')
-			return(token_redirects(msh, i, TOKEN_HEREDOC));
+			return (token_redirects(msh, i, TOKEN_HEREDOC));
 		return (token_redirects(msh, i, TOKEN_REDIRECT_INPUT));
 	}
 	return (0);
 }
 
-int minishell_pre_parser(t_shell *msh)
+int	minishell_pre_parser(t_shell *msh)
 {
-	int i;
-	char *new;
+	int		i;
+	char	*new;
 
 	i = 0;
 	new = NULL;
@@ -88,23 +102,19 @@ int minishell_pre_parser(t_shell *msh)
 			return (syntax_error(msh, msh->str + i, 2));
 		return (syntax_error(msh, msh->str + i, 1));
 	}
-	if (!msh->str)
-	{
-		free(msh->str);
-		return (1);
-	}
-	new = ft_strdup(msh->str + i);
+	if (msh->str[i] != 0)
+		new = ft_strdup(msh->str + i);
 	free(msh->str);
 	msh->str = new;
 	return (0);
 }
 
-int parser(t_shell *msh)
+int	parser(t_shell *msh)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (minishell_pre_parser(msh))
+	if (minishell_pre_parser(msh) || msh->str == NULL)
 		return (0);
 	add_info(msh);
 	while (msh->str)
